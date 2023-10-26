@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+  <record id="estate_property_action" model="ir.actions.act_window">
+    <field name="name">Esatate Property action</field>
+    <field name="res_model">estate.property.type</field>
+    <field name="view_mode">tree,form,kanban</field>
+  </record>
+  
+  
+  
+  
+  
+  
+
+    <menuitem id="estate_property_first_level_menu" name="Settings" parent="test_menu_root">
+        <menuitem id="estate_property_menu_action" action="estate_property_action" />
+    </menuitem>
+
+
+
+   
+   
+
+
+
+  <record model="ir.ui.view" id="estate_property_form_view">
+      <field name="name">Property</field>
+      <field name="model">estate.property.type</field>
+      <field name="arch" type="xml">
+        <form >
+        
+           <field name="states" widget="statusbar" options="{'clickable' : '1' }"  />
+        
+          <sheet>
+          <group>
+          <field name="name" />
+
+          <field name="expected_price" />
+          <field name="selling_price" />
+          
+          </group>
+            <group>
+              <field name="property_type" option="{'no_create': True}"/>
+              <field name="tags" widget="many2many_tags" options="{'color_field': 'color'}"/>
+              <field name="best_offer" />
+            </group>
+            <notebook>
+            
+            <page string="Description ">
+                <group>
+                  <field name="description" />
+                </group>
+              </page>
+              
+              <page string="Offers ">
+                  <field name="offer_ids"   attrs="{'readonly': [ ('expected_price', '>', '1000')]} " />
+
+              </page>
+              
+              
+              <page string="Other Info ">
+                <group>
+                  <field name="buyer" />
+                  <field name="salesperson" />
+                </group>
+              </page>
+              
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+</record>
+
+    
+    
+    
+    <record id="estate_property_view" model="ir.ui.view">
+        <field name="name">estate Properties</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="sequence" widget="handle"/>
+                <field name="name" width="1"/>
+                <field name="property_type" width="3"/>
+                
+            </tree>
+        </field>
+    </record>
+    
+    
+    
+    <record model="ir.ui.view" id="estate_kanban_view">
+      <field name="name">Kanban</field>
+      <field name="model">estate.property.type</field>
+      <field name="arch" type="xml">
+      
+      
+      
+         <kanban class="o_kanban_mobile "  default_group_by="property_type" >
+         <field name="tags"/>
+         <field name="states"/>                 
+	       	<templates>
+		       	<t t-name="kanban-box">
+			         	<div t-attf-class="oe_kanban_global_click">					
+			         		<div class="oe_kanban_details">						
+				        		<div class="o_kanban_record_top">
+				        			<div class="o_kanban_record_headings">					
+					          			<h1 > <field name="name"/></h1>					
+						        	</div>
+					        	</div>
+                        <ul>
+                           <li>
+                              Expected Price: <field name="expected_price"/>
+                           </li>
+                           <li t-if="record.states.raw_value == 'offer received'">
+                              Best Offer: <field name="best_offer"/>
+                              
+                           </li>
+
+                        </ul>                                        
+						
+						          <field name="tags" widget="many2many_tags" options="{'color_field': 'color'}"/><br/> 
+			       		</div>
+			   	</div>
+		   	</t>
+	  	</templates>
+    	</kanban>
+      </field>
+    </record>
+
+</odoo>

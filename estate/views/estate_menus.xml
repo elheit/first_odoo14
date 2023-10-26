@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+  <record id="test_model_action" model="ir.actions.act_window">
+    <field name="name">Properties</field>
+    <field name="res_model">test_model</field>
+    <field name="context" >{'search_default_available': True}</field>
+    <field name="view_mode">tree,form,kanban</field>
+  </record>
+  
+ 
+
+  
+  
+  <menuitem id="test_menu_root" name="Estate" >
+    <menuitem id="test_first_level_menu" name="First Level" >
+        <menuitem id="test_model_menu_action" action="test_model_action" />
+    </menuitem>
+
+</menuitem>
+
+ 
+  
+  
+  
+
+  <record model="ir.ui.view" id="estate_form_view">
+      <field name="name">Details</field>
+      <field name="model">test_model</field>
+      <field name="arch" type="xml">
+        <form >
+        <header>
+           <button id="button_sold" name="action_sold" string="SOLD" class="btn-primary"  type="object" states="" invisible="" />
+           <button id="button_cancaled" name="action_cancaled" string="Cancaled" class="btn-primary"  type="object"  states="" invisible="" />
+           
+           <field name="states" widget="statusbar" options="{'clickable' : '1' }"  />
+           
+        </header>
+          <sheet>
+          <group>
+          <field name="title" />
+          </group>
+            <group>
+              <field name="postcode"/>
+              <field name="availability_date"  />
+              <field name="status" />
+            </group>
+            <group>            
+              <field name="expected_price"/>
+              <field name="selling_price"  />
+            </group>
+            <notebook>
+              <page string="Description">
+                <group>
+                  <field name="description"/>
+                  <field name="bedrooms" />
+                  <field name="living_area" />
+                  <field name="facades" />
+                  <field name="garage"/>
+                  <field name="garden" />
+                  <field name="garden_area"  attrs="{'invisible': [('garden', '=', False)]}"/>
+                  <field name="garden_orientation" attrs="{'invisible': [('garden', '=', False)]}"/>
+                  <field name="total_area" />
+                </group>
+              </page>
+              
+             
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+</record>
+
+
+
+ <record model="ir.ui.view" id="estate_kanban_view">
+      <field name="name">Kanban</field>
+      <field name="model">test_model</field>
+      <field name="arch" type="xml">
+         <kanban>
+            <templates>
+              <t t-name="kanban-box">
+                  <div class="oe_kanban_global_click">
+                       <field name="title"/>
+                       <field name="expected_price"/>
+                  </div>
+
+             </t>
+             </templates>
+         </kanban>
+      </field>
+</record>
+
+    
+    
+    
+    
+   <record id="estate_search" model="ir.ui.view">
+        <field name="name">Search</field>
+        <field name="model">test_model</field>
+        <field name="arch" type="xml">
+            <search >
+                    <field name="title"/>
+                    <field name="postcode"/>
+                    <field name="description"/>
+                    <field name="expected_price"/>
+                    <field name="bedrooms"/>
+                    <field name="living_area" filter_domain="[('living_area', '>=', self)]"/>
+                    <field name="facades"/>
+                    <filter string="Available"  name="available" domain="[ '|' , ('states', '=', ('new' , 'NEW')) , ('states' , '=' , ('Offer received','OFFER RECEIVED')) ]"/>
+                    
+                    <group expand="1" string="Group By">
+                        <filter string="Post_code" name="postcode" context="{'group_by':'postcode'}"/>
+                    </group>
+             </search>
+        </field>
+    </record>
+    
+    
+    <record id="estate_view" model="ir.ui.view">
+        <field name="name">Properties</field>
+        <field name="model">test_model</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="states == 'offer received' or states == 'offer accepted' "  
+            decoration-bf="states == 'offer accepted'" decoration-muted="states == 'sold'" >
+                <field name="title"  />
+                <field name="postcode"/>
+                <field name="bedrooms" />
+                <field name="living_area" />
+                <field name="expected_price"  />
+                <field name="states"  invisible="1"/>
+                <field name="selling_price"  />
+                <field name="availability_date" string="Available From" optional="hide"/>
+                
+                
+                
+            </tree>
+        </field>
+    </record>
+    
+    
+    
+    
+    
+    
+</odoo>
+           
+           
