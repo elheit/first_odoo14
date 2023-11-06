@@ -8,12 +8,12 @@
     Description text
     """,
     'data':[
+    'security/ir.model.access.csv',
     'views/estate_menus.xml',
     'views/estate_settings.xml',
     'views/estate_tag.xml',
-    'views/estate_offer.xml',
     'views/inherited_view.xml',
-    'security/ir.model.access.csv',
+    
     
     ]
 }

@@ -69,7 +69,7 @@ class TestModel(models.Model):
           
           
     def action_sold(self):
-        for record in self:
+        for record in self.web_progress_iter(self, msg="Message"):
            if(record.status != "cancaled"):
                record.status = "sold"
            else:
