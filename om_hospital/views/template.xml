@@ -1,37 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-   
-   <template id="hospital_patients">
-     <t t-call="website.layout">
-      <title>Patients</title>
-      <div class="oe_structure" />
-      <div class="oe_structure" >
-        <div class="container">
-          <t t-foreach="patients" t-as="patient">
-            <p>
-              <a t-attf-href="/hospital/{{ slug(patient) }}"> <t t-esc="patient.name" /></a>
-            
-            </p>          
-          </t>
-        </div>
-      </div>
-      </t>
-   </template>
-   
-   
-   <template id="hospital_patients_details">
-     <t t-call="website.layout">
-      <title>Patients</title>
-      <div class="oe_structure" />
-      <div class="oe_structure" >
-        <div class="container">
-           <h3><t t-esc="patient.name" /></h3>
-        </div>
-      </div>
-      </t>
-   </template>
 
-
-
+    <template id="assets_backend_om_hospital" name="om_hospital assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/css" href="/om_hospital/static/src/css/style.css"/>
+        </xpath>
+    </template>
 
 </odoo>

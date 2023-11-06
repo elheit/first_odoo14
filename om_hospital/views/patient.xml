@@ -54,6 +54,16 @@
                     <notebook>
                       <page string="Appointments" name="appointments">
                         <field name="appointment_ids">
+                        
+                              <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'"
+                                 decoration-success="state == 'done'" decoration-danger="state == 'confirm'" sample="1" class="custom_class">
+                                       <field name="name"/>
+                                       <field name="patient_id"/>
+                                        <field name="patient_age" />
+                                        <field name="appointment_date"/>
+                                        <field name="state" invisible="1"/>
+                                        <button  name="action_set_confirm" type="object" class="fa fa-window-close"  />
+                                           </tree>
                         </field>
                       </page>
                     </notebook>
